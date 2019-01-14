@@ -15,7 +15,7 @@
         <div class="header">Welcome to New Article!</div>
         <p>填写下面的表单来创建新的文章</p>
     </div>
-    <form class="ui form attached fluid segment celled" method="post" action="http://localhost:8080/article/add">
+    <form  id="form" class="ui form attached fluid segment celled" method="post" action="http://localhost:8080/article/add">
         <div class="two fields">
             <div class="field">
                 <label>文章标题</label>
@@ -43,10 +43,35 @@
             </select>
         </div>
 
-        <input class="field ui blue submit button fluid" type="submit"/>
+        <input class="field ui blue submit button fluid" type="button" onclick="add()"/>
     </form>
 </div>
 
 
 </body>
+<script>
+    function add() {
+        $.ajax({
+            type:"get",
+            url:"http://localhost:8080/article/add",
+            data:$("#form").serialize(),
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success:function (result) {
+                if(result=="success"){
+                    console.log(result)
+                    window.location.href="articles.html";
+                }else
+                    alert(result);
+                    console.log(result);
+            },
+            fail:function (err) {
+                console.log(err);
+            }
+            });
+
+    }
+</script>
 </html>

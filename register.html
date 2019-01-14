@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <div class="jumbotron">
-        <form class="form-horizontal" role="form" method="get" action="http://localhost:8080/blog/register/user">
+        <form id="form" class="form-horizontal" role="form" method="get" action="http://localhost:8080/blog/register/user">
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label">用户名</label>
                 <div class="col-sm-10">
@@ -25,13 +25,38 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">注册</button>
+                    <button type="button" onclick="register()" class="btn btn-default">注册</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 </body>
+<script>
+    function register() {
+        $.ajax({
+            type:"get",
+            url:"http://localhost:8080/blog/register/user",
+            data:$("#form").serialize(),
+            xhrFields: {
+                withCredentials: true     //解决跨域session丢失问题
+            },
+            crossDomain: true,
+            success:function (result) {
+                if(result=="success"){
+                    console.log(result)
+                    window.location.href="login.html";
+                }else
+                    alert(result);
+                    console.log(result);
+            },
+            fail:function (err) {
+                console.log(err);
+            }
+            });
+
+    }
+</script>
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>
