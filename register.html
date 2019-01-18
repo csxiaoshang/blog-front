@@ -43,7 +43,7 @@
             },
             crossDomain: true,
             success:function (result) {
-                if(result=="success"){
+                if(result.code==2000){
                     console.log(result)
                     window.location.href="login.html";
                 }else
